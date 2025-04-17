@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      新しい価値の形：あなたの「熱量」がデジタルな価値になる - Soul-bound ERC-20
+    </title>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+          "Hiragino Sans", Meiryo, sans-serif;
+        line-height: 1.8;
+        color: #333;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+      header {
+        background: linear-gradient(
+          135deg,
+          #ff7e5f 0%,
+          #feb47b 100%
+        ); /* 暖色系グラデーションに変更 */
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      header h1 {
+        font-size: 2.8em;
+        margin-bottom: 10px;
+        font-weight: 700;
+        animation: fadeInDown 1s ease-out;
+      }
+      header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+        animation: fadeInUp 1s ease-out 0.5s;
+        animation-fill-mode: backwards;
+      }
+
+      main {
+        max-width: 1024px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      section {
+        background-color: #ffffff;
+        margin-bottom: 40px;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+
+      section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      h2 {
+        font-size: 2.2em;
+        /* --- 修正点: 見出し色変更 --- */
+        color: #ff7e5f; /* ヘッダーの色と合わせる */
+        margin-bottom: 25px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #feb47b; /* ヘッダーの色と合わせる */
+        display: inline-block;
+      }
+
+      h3 {
+        font-size: 1.6em;
+        color: #5a5a5a;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        /* --- 修正点: 見出しデザイン変更 --- */
+        border-left: 5px solid #ff7e5f;
+        padding-left: 10px;
+      }
+
+      p,
+      ul {
+        font-size: 1.1em;
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      li {
+        /* --- 修正点: リストマーカー色変更 --- */
+        background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff7e5f" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>')
+          no-repeat left 5px; /* チェックマークから丸に変更 */
+        padding-left: 30px;
+        margin-bottom: 12px;
+        line-height: 1.7;
+      }
+
+      .icon {
+        font-size: 1.5em;
+        /* --- 修正点: アイコン色変更 --- */
+        color: #ff7e5f;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+
+      .highlight {
+        /* --- 修正点: ハイライト色変更 --- */
+        background-color: #fff0e6; /* オレンジ系 */
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        color: #d95f30; /* オレンジ系 */
+      }
+      code {
+        background-color: #eee;
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+        font-size: 0.95em;
+        color: #d63384; /* ピンク系 */
+      }
+
+      .caution {
+        background-color: #fff3cd;
+        border-left: 5px solid #ffeeba;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+        font-size: 1em;
+      }
+
+      .usecase-box {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #fdfdff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .usecase-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .usecase-box h4 {
+        margin-top: 0;
+        /* --- 修正点: 見出し色変更 --- */
+        color: #ff7e5f;
+        font-size: 1.3em;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 50px;
+        padding: 30px 20px;
+        color: #777;
+        font-size: 0.9em;
+        background-color: #e9ecef;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+      }
+
+      /* アニメーション */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2.2em;
+        }
+        header p {
+          font-size: 1em;
+        }
+        h2 {
+          font-size: 1.8em;
+        }
+        h3 {
+          font-size: 1.4em;
+        }
+        p,
+        ul,
+        li {
+          font-size: 1em;
+        }
+        section {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><span class="icon">🔥</span>可視化される「熱量」</h1>
+      <p>譲渡できない特別なトークンが、あなたの情熱を価値に変える</p>
+    </header>
+
+    <main>
+      <section id="intro">
+        <h2><span class="icon">🤔</span> デジタルな「熱量」って何？</h2>
+        <p>
+          Web3の世界には、NFTやSBTのように「デジタルな一点モノ」や「個人の証明」を表す技術がありますね。
+        </p>
+        <p>
+          今日注目するのは、それらとは少し違う、<strong class="highlight"
+            >あなたの「熱量」をデジタルな形にする</strong
+          >技術、<code class="highlight">Soul-bound ERC-20</code>
+          という私が考えた新しい概念をご紹介します！
+        </p>
+        <p>
+          これは、コミュニティへの貢献、学習への意欲、プロジェクトへの情熱といった<strong
+            class="highlight"
+            >目に見えない「熱量」を、数値として貯めていくことができる</strong
+          >特別なトークンです。
+        </p>
+        <p>
+          一番の特徴は、この「熱量」は<strong class="highlight"
+            >他の人に譲ったり、売ったりできない</strong
+          >こと。だからこそ、あなた自身の純粋な活動や想いの証になるんです。
+        </p>
+      </section>
+
+      <section id="why-cool">
+        <h2>
+          <span class="icon">🚀</span> デジタルな「熱量」がもたらす素敵なこと
+        </h2>
+
+        <h3>
+          1.
+          <span class="icon">🌡️</span> あなたの「情熱」や「信頼」が見える形に！
+        </h3>
+        <ul>
+          <li>
+            コミュニティ活動や目標達成など、ポジティブなアクションに応じて<strong
+              class="highlight"
+              >「熱量」が付与</strong
+            >される。
+          </li>
+          <li>
+            蓄積された「熱量」の大きさで、あなたの<strong class="highlight"
+              >貢献度や信頼度が周りに伝わりやすく</strong
+            >なる。
+          </li>
+          <li>
+            もしネガティブな行動があれば、「熱量」が下がる（消費される）仕組みで、健全なコミュニティを維持することも。
+          </li>
+        </ul>
+
+        <h3>
+          2.
+          <span class="icon">🛡️</span>
+          お金儲けのためじゃない、純粋な「想い」の証
+        </h3>
+        <ul>
+          <li>
+            売買できないから、<strong class="highlight"
+              >投機的な目的で価値が左右されにくい</strong
+            >。
+          </li>
+          <li>
+            「熱量」は、時間や労力、そしてあなたの<strong class="highlight"
+              >ポジティブなアクションによってのみ増えていく、純粋な活動証明</strong
+            >。
+          </li>
+        </ul>
+
+        <h3>
+          3.
+          <span class="icon">🤝</span>
+          「熱意ある人」の声が、もっと届きやすくなる
+        </h3>
+        <ul>
+          <li>
+            蓄積された「熱量」に応じて、グループでの<strong class="highlight"
+              >発言力（投票の重み）を高める</strong
+            >ことができる。
+          </li>
+          <li>
+            熱心に活動する人の意見が、より反映されやすいフェアな仕組みづくりに貢献。
+          </li>
+        </ul>
+
+        <h3>
+          4.
+          <span class="icon">🎁</span> 「熱量」が、新しい体験や特典につながる！
+        </h3>
+        <ul>
+          <li>
+            一定の「熱量」に達したら特別な割引が受けられたり、「熱量」を<strong
+              class="highlight"
+              >エネルギーとして消費</strong
+            >して限定グッズやサービスと交換したり。
+          </li>
+          <li>
+            あなたの<strong class="highlight">活動が具体的なメリットに</strong
+            >結びつく、楽しい仕組みを自由に設計できる。
+          </li>
+        </ul>
+
+        <h3>
+          5. <span class="icon">⚙️</span> 実は効率的！「熱量」をみんなでシェア
+        </h3>
+        <ul>
+          <li>
+            たくさんの人に<strong class="highlight"
+              >「熱量」を効率的に届ける</strong
+            >ことが技術的に得意（低コスト＆スケーラブル）。
+          </li>
+          <li>
+            誰がどれだけ「熱量」を持っているか、<strong class="highlight"
+              >ランキングなどを自動で表示</strong
+            >しやすい。
+          </li>
+          <li>
+            ブロックチェーン上で管理されるため、<strong class="highlight"
+              >複数のサービスやコミュニティで同じ「熱量」データを参照</strong
+            >し、連携させやすい。
+          </li>
+          <li>
+            既存の技術（ERC-20対応ツール）を多く活用できるため、<strong
+              class="highlight"
+              >開発もスムーズ</strong
+            >に進めやすい。
+          </li>
+        </ul>
+      </section>
+
+      <section id="usecases">
+        <h2><span class="icon">💡</span> 「熱量」が活躍する未来のカタチ</h2>
+
+        <div class="usecase-box">
+          <h4><span class="icon">🌟</span> 信頼と評判の「熱量」</h4>
+          <p>
+            コミュニティでの貢献や交流を通じて「信頼の熱量」を高める。熱量の高いメンバーには、特別な役割やモデレーター権限などを付与。
+          </p>
+        </div>
+
+        <div class="usecase-box">
+          <h4><span class="icon">💻</span> 開発やOSSへの「熱量」証明</h4>
+          <p>
+            GitHubでの活動などをトリガーに「開発熱量」を付与。目に見える形で貢献を示し、採用や報酬決定の参考に。
+          </p>
+        </div>
+
+        <div class="usecase-box">
+          <h4><span class="icon">🎓</span> 学びや参加への「熱量」</h4>
+          <p>
+            講座の受講完了やイベントへの積極的な参加で「学びの熱量」がアップ。一定の熱量で修了証や次のステップへの参加権をアンロック。
+          </p>
+        </div>
+
+        <div class="usecase-box">
+          <h4><span class="icon">🌍</span> 社会貢献やエコ活動の「熱量」</h4>
+          <p>
+            ボランティア活動や環境に配慮した行動で「ソーシャル熱量」を獲得。個々のポジティブなアクションを可視化し、ムーブメントを後押し。
+          </p>
+        </div>
+
+        <div class="usecase-box">
+          <h4><span class="icon">💰</span> 使途が明確な支援の「熱量」</h4>
+          <p>
+            補助金などを譲渡不可の「支援熱量」として配布。特定の目的（食料購入や学費など）にのみ使えるようにし、意図した通りの支援を実現。
+          </p>
+        </div>
+
+        <div class="usecase-box">
+          <h4><span class="icon">⚖️</span> コミットメントを示す「熱量」担保</h4>
+          <p>
+            プロジェクトへの参加時に、一定の「コミットメント熱量」を預ける（デポジット）。万が一ルール違反があれば、その熱量が減ることでペナルティに。
+          </p>
+        </div>
+      </section>
+
+      <section id="considerations">
+        <h2><span class="icon">⚠️</span> 「熱量」を活かすために考えたいこと</h2>
+        <ul>
+          <li>
+            <strong>なりすまし・不正対策：</strong>
+            一人で何役も演じて不正に「熱量」を稼ぐことを防ぐ仕組み（本人確認など）は大切。
+          </li>
+          <li>
+            <strong>プライバシーへの配慮：</strong>
+            自分の「熱量」をオープンにしたくない人もいるはず。公開範囲を選べたり、匿名で証明できる技術（ゼロ知識証明など）も選択肢に。
+          </li>
+          <li>
+            <strong>法規制とのバランス：</strong>
+            譲渡できない設計はリスクを抑えますが、お金と直接交換できるような仕組みにすると規制対象になる可能性も。設計には注意が必要。
+          </li>
+          <li>
+            <strong>「熱量」を失わないために：</strong>
+            デジタルなものなので、アカウントを失うと「熱量」も失われる可能性が。安全な管理方法や、万が一のための復旧手段（ソーシャルリカバリーなど）も重要。
+          </li>
+        </ul>
+        <p class="caution">
+          これらの点も、技術の進化やコミュニティのルール作りでより良くしていくことができます。
+        </p>
+      </section>
+
+      <section id="summary">
+        <h2>
+          <span class="icon">🎯</span> まとめ：「熱量」が正しく評価される未来へ
+        </h2>
+        <p>この譲渡できない特別な「熱量」トークンは…</p>
+        <ul>
+          <li>
+            これまで見えにくかった<strong class="highlight"
+              >個人の情熱や貢献、コミュニティへの想いを「熱量」として可視化</strong
+            >する。
+          </li>
+          <li>
+            投機的なノイズに惑わされず、<strong class="highlight"
+              >純粋な活動や信頼をフェアに評価する</strong
+            >新しい仕組みを作る。
+          </li>
+          <li>
+            人々の<strong class="highlight"
+              >ポジティブなエネルギーを循環させ</strong
+            >、コミュニティや社会をより良くしていくためのエンジンになるかもしれない。
+          </li>
+        </ul>
+        <p>
+          あなたの「熱量」が、ちゃんと誰かに伝わり、認められ、そして新しい価値につながっていく。そんな素敵な未来を、この技術は後押ししてくれるかもしれません。
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Soul-bound ERC-20 (非譲渡Fungible Token) の可能性について</p>
+      <p>&copy; masataka-think</p>
+    </footer>
+
+    <script>
+      // スクロールでセクションをフェードインさせる
+      const sections = document.querySelectorAll("section");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+        }
+      );
+
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+    </script>
+  </body>
+</html>
